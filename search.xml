@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Inside the Android OS</title>
+      <link href="/2022/06/15/InsideAndroidScroll/"/>
+      <url>/2022/06/15/InsideAndroidScroll/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Three-Views-of-the-Android-System"><a href="#Three-Views-of-the-Android-System" class="headerlink" title="Three Views of the Android System"></a>Three Views of the Android System</h2><h3 id="Android-Layer-Cake"><a href="#Android-Layer-Cake" class="headerlink" title="Android Layer Cake"></a>Android Layer Cake</h3><h3 id="The-Android-Service-Model"><a href="#The-Android-Service-Model" class="headerlink" title="The Android Service Model"></a>The Android Service Model</h3><h3 id="The-Source"><a href="#The-Source" class="headerlink" title="The Source"></a>The Source</h3>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>软件测试 Software Testing</title>
       <link href="/2021/05/27/TestScroll/"/>
       <url>/2021/05/27/TestScroll/</url>
