@@ -1,0 +1,543 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>软件测试 Software Testing</title><meta name="description" content="May it be an evening star shines down upon you."><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'G-G8T1Z4FBY6', 'www.googletagmanager.com');
+ga('send', 'pageview');</script><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/oracle.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="
+软件测试的概念软件软件=程序+文档
+软件测试软件测试（Software Testing），描述一种用来促进鉴定软件的正确性、完整性、安全性和质量的过程。换句话说，软件测试是一种实际输出与预期输出之间的审核或者比较过程。软件测试的经典定义是：在规定的条件下对程序进行操作，以发现程序错误，衡量软件质量，并对其是否能满足设计要求进行评估的过程。
+缺陷什么是软件缺陷
+没有实现《需求规格说明书》中需要实现的功能
+实现了《需求规格说明书》中没有提到的功能
+实现了基本功能，但未实现一些虽未明确规定但应该实现的目标，如软件难以理解，不易使用，运行缓慢等
+
+产生原因
+软件产品说明书（需求）
+设计
+编写代码
+其它
+
+测试用例
+定义：在测试执行之前设计的一套详细的测试方案，包括测试环境、测试步骤、测试数据和预期结果
+测试用例=.."><meta name="generator" content="Hexo 7.0.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="BambooSlips' blog" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">BambooSlips's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">软件测试 Software Testing</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">软件测试的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6"><span class="toc-text">软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="toc-text">软件测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E9%99%B7"><span class="toc-text">缺陷</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%BD%AF%E4%BB%B6%E7%BC%BA%E9%99%B7"><span class="toc-text">什么是软件缺陷</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0"><span class="toc-text">产生原因</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="toc-text">测试用例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95"><span class="toc-text">黑盒测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%A4%E5%9B%A0%E6%9E%9C%E5%9B%BE%E5%A4%96%E5%90%84%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="toc-text">除因果图外各种方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%B9%E7%95%8C%E5%80%BC%E5%88%86%E6%9E%90"><span class="toc-text">边界值分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">基本思想</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BE%B9%E7%95%8C%E5%80%BC%E5%88%86%E6%9E%90%E8%8E%B7%E5%BE%97%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">边界值分析获得测试用例的方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F%E5%87%BD%E6%95%B0%E8%BE%B9%E7%95%8C%E5%80%BC%E5%88%86%E6%9E%90%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="toc-text">两个变量函数边界值分析测试用例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%81%A5%E5%A3%AE%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="toc-text">健壮性测试</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%A4%E5%AE%9A%E8%A1%A8%E7%9A%84%E6%B5%8B%E8%AF%95"><span class="toc-text">基于判定表的测试</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A4%E5%AE%9A%E8%A1%A8%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">判定表的组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A4%E5%AE%9A%E8%A1%A8%E7%9A%84%E7%BB%84%E6%88%90-1"><span class="toc-text">判定表的组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E5%90%88%E5%B9%B6"><span class="toc-text">规则合并</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A4%E5%AE%9A%E8%A1%A8%E5%BB%BA%E7%AB%8B%E6%AD%A5%E9%AA%A4"><span class="toc-text">判定表建立步骤</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A4%E5%AE%9A%E8%A1%A8%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">判定表的优点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A4%E5%AE%9A%E8%A1%A8%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-text">判定表的缺点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E6%B3%95"><span class="toc-text">场景法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%92%E5%88%86%E7%AD%89%E4%BB%B7%E7%B1%BB"><span class="toc-text">划分等价类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E4%BB%B7%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="toc-text">等价类定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E6%95%88%E7%AD%89%E4%BB%B7%E7%B1%BB"><span class="toc-text">有效等价类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E6%95%88%E7%AD%89%E4%BB%B7%E7%B1%BB"><span class="toc-text">无效等价类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E7%AD%89%E4%BB%B7%E7%B1%BB%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-text">确定等价类的原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E7%AD%89%E4%BB%B7%E7%B1%BB%E8%AE%BE%E8%AE%A1%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="toc-text">用等价类设计测试用例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="toc-text">写测试用例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web%E6%B5%8B%E8%AF%95"><span class="toc-text">Web测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5-1"><span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E5%8D%95%E6%B5%8B%E8%AF%95"><span class="toc-text">表单测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%95%8C%E9%9D%A2%E6%B5%8B%E8%AF%95"><span class="toc-text">界面测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-text">功能测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95"><span class="toc-text">安全测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E7%BC%BA%E9%99%B7%E6%8A%A5%E5%91%8A"><span class="toc-text">写缺陷报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#selenium%E5%86%99%E4%BB%A3%E7%A0%81"><span class="toc-text">selenium写代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95"><span class="toc-text">白盒测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5-2"><span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%B5%8B%E8%AF%95"><span class="toc-text">动态测试</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%A6%86%E7%9B%96"><span class="toc-text">逻辑覆盖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%99%E8%A6%86%E7%9B%96"><span class="toc-text">写覆盖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Junit%E5%86%99%E4%BB%A3%E7%A0%81"><span class="toc-text">Junit写代码</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-text">性能测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5-3"><span class="toc-text">概念</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/SE"><i class="tag post-item-tag">SE</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">软件测试 Software Testing</h1><time class="has-text-grey" datetime="2021-05-27T12:39:00.000Z">2021-05-27</time><article class="mt-2 post-content"><p><img src="/images/st1.png" alt="st1"></p>
+<h2 id="软件测试的概念"><a href="#软件测试的概念" class="headerlink" title="软件测试的概念"></a>软件测试的概念</h2><h3 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h3><p>软件=程序+文档</p>
+<h3 id="软件测试"><a href="#软件测试" class="headerlink" title="软件测试"></a>软件测试</h3><p>软件测试（Software Testing），描述一种用来促进鉴定软件的正确性、完整性、安全性和质量的过程。换句话说，软件测试是一种实际输出与预期输出之间的审核或者比较过程。软件测试的经典定义是：在规定的条件下对程序进行操作，以发现程序错误，衡量软件质量，并对其是否能满足设计要求进行评估的过程。</p>
+<h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><h4 id="什么是软件缺陷"><a href="#什么是软件缺陷" class="headerlink" title="什么是软件缺陷"></a>什么是软件缺陷</h4><ul>
+<li>没有实现《需求规格说明书》中需要实现的功能</li>
+<li>实现了《需求规格说明书》中没有提到的功能</li>
+<li>实现了基本功能，但未实现一些虽未明确规定但应该实现的目标，如软件难以理解，不易使用，运行缓慢等</li>
+</ul>
+<h4 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h4><ul>
+<li>软件产品说明书（需求）</li>
+<li>设计</li>
+<li>编写代码</li>
+<li>其它</li>
+</ul>
+<h3 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a>测试用例</h3><ul>
+<li>定义：在测试执行之前设计的一套详细的测试方案，包括测试环境、测试步骤、测试数据和预期结果</li>
+<li>测试用例=输入+输出+测试环境<ul>
+<li>输入：测试数据和操作步骤</li>
+<li>输出：期望结果</li>
+<li>测试环境：系统环境设置</li>
+</ul>
+</li>
+<li>设计测试用例是创造性劳动，而执行测试用例是体力劳动，设计测试用例是软件测试的关键</li>
+</ul>
+<h2 id="黑盒测试"><a href="#黑盒测试" class="headerlink" title="黑盒测试"></a>黑盒测试</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li><p>又叫功能测试，数据驱动测试或基于规格说明的测试。（实际上，黑盒测试包括功能测试和性能测试）</p>
+</li>
+<li><p>测试过程</p>
+<pre><code class="hljs mermaid">graph LR
+A[需求说明] --&gt; |产生| B[被测程序] --&gt;|输出| C[测试结果]
+C[测试结果] --&gt;|比较| A[需求说明]
+</code></pre>
+</li>
+<li><p>黑盒测试的难点在于如何构造有效的输入</p>
+<ul>
+<li>由于输入空间通常是无限的，穷举测试显然行不通。 </li>
+<li>寻找最小最重要的用例集合以精简测试复杂性。</li>
+</ul>
+</li>
+</ul>
+<h3 id="除因果图外各种方法"><a href="#除因果图外各种方法" class="headerlink" title="除因果图外各种方法"></a>除因果图外各种方法</h3><h4 id="边界值分析"><a href="#边界值分析" class="headerlink" title="边界值分析"></a>边界值分析</h4><h5 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h5><h5 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h5><ul>
+<li>在最小值、略高于最小值、正常值、略低于最大值和最大值处取输入变量值 </li>
+<li>表示方法min、min+、nom、max-和max</li>
+</ul>
+<h5 id="边界值分析获得测试用例的方法"><a href="#边界值分析获得测试用例的方法" class="headerlink" title="边界值分析获得测试用例的方法"></a>边界值分析获得测试用例的方法</h5><ul>
+<li>使所有变量取正常值，只使一个变量取极值； </li>
+<li>对于一个n变量函数，边界值分析会产生4n+1个测试用例。</li>
+</ul>
+<h5 id="两个变量函数边界值分析测试用例"><a href="#两个变量函数边界值分析测试用例" class="headerlink" title="两个变量函数边界值分析测试用例"></a>两个变量函数边界值分析测试用例</h5><ul>
+<li>X1取值：x1min,x1min+,x1nom,x1max-,x1max </li>
+<li>X2取值：x2min,x2min+ ,x2nom,x2max-,x2max</li>
+</ul>
+<h5 id="健壮性测试"><a href="#健壮性测试" class="headerlink" title="健壮性测试"></a>健壮性测试</h5><h4 id="基于判定表的测试"><a href="#基于判定表的测试" class="headerlink" title="基于判定表的测试"></a>基于判定表的测试</h4><h5 id="判定表的组成"><a href="#判定表的组成" class="headerlink" title="判定表的组成"></a>判定表的组成</h5><ul>
+<li>条件桩（Condition Stub）<br>列出问题的所有条件 </li>
+<li>动作桩（Action Stub）<br>列出可能采取的操作 </li>
+<li>条件项（Condition Entity）<br>列出条件桩的取值 </li>
+<li>动作项（Action Entity）<br>列出条件项各种取值下应该采取的动作</li>
+</ul>
+<h5 id="判定表的组成-1"><a href="#判定表的组成-1" class="headerlink" title="判定表的组成"></a>判定表的组成</h5><h5 id="规则合并"><a href="#规则合并" class="headerlink" title="规则合并"></a>规则合并</h5><ul>
+<li>规则合并就是判定表的简化。 </li>
+<li>有两条或多条规则具有相同的动作，并且其条件项之间存在着极为相似的关系，就可以将规则合并。</li>
+</ul>
+<h5 id="判定表建立步骤"><a href="#判定表建立步骤" class="headerlink" title="判定表建立步骤"></a>判定表建立步骤</h5><ul>
+<li>根据软件规格说明<br>① 列出所有的条件桩和动作桩；<br>② 确定规则的个数；<br> 假如有n个条件，每个条件有两个取值（0,1）,则有2^n 种规则；<br>③ 填入条件项；<br>④ 填入动作项，得到初始决策表；<br>⑤ 简化，合并相似规则（相同动作）。</li>
+</ul>
+<h5 id="判定表的优点"><a href="#判定表的优点" class="headerlink" title="判定表的优点"></a>判定表的优点</h5><ul>
+<li>能把复杂的问题按各种可能的情况一一列举出来 </li>
+<li>简明而易于理解 </li>
+<li>可避免遗漏</li>
+</ul>
+<h5 id="判定表的缺点"><a href="#判定表的缺点" class="headerlink" title="判定表的缺点"></a>判定表的缺点</h5><ul>
+<li><p>不能表达重复执行的动作，例如循环结构 </p>
+</li>
+<li><p>判定表不能很好地伸缩 </p>
+</li>
+<li><p>有n个条件的决策表有2^n 个规则</p>
+</li>
+</ul>
+<h4 id="场景法"><a href="#场景法" class="headerlink" title="场景法"></a>场景法</h4><h3 id="划分等价类"><a href="#划分等价类" class="headerlink" title="划分等价类"></a>划分等价类</h3><h4 id="等价类定义"><a href="#等价类定义" class="headerlink" title="等价类定义"></a>等价类定义</h4><p>等价类是输入域的某个子集合，而所有的等价类的并集是整个输入域。在子集合中，各个输入数据对于揭露程序中的错误是等效的。</p>
+<h4 id="有效等价类"><a href="#有效等价类" class="headerlink" title="有效等价类"></a>有效等价类</h4><p>对于程序的规格说明来说，是合理的、有意义的输入数据所构成的集合；</p>
+<h4 id="无效等价类"><a href="#无效等价类" class="headerlink" title="无效等价类"></a>无效等价类</h4><p>对于程序的规格说明来说，是不合理的、没有意义的输入数据所构成的集合</p>
+<h4 id="确定等价类的原则"><a href="#确定等价类的原则" class="headerlink" title="确定等价类的原则"></a>确定等价类的原则</h4><ul>
+<li>如果输入条件规定了取值范围或值的个数就可确定一个有效等价类和两个无效等价类</li>
+<li>如果输入条件是一个布尔量,则可以确立一个有效等价类和一个无效等价类。</li>
+<li>如果规定了输入数据的一组值, 且程序要对每一个输入值分别进行处理, 要对每一个规定的输入值确立一个有效等价类,而对于这组值之外的所有值确立一个无效等价类。</li>
+<li>如果规定了输入数据必须遵循的规则，可确定一个有效等价类和若干个无效等价类（从不同角度违反规则)。 （其他情况）</li>
+<li>如已划分的等价类各元素在程序中的处理方式不同，则应将此等价类进一步划分成更小的等价类</li>
+</ul>
+<h4 id="用等价类设计测试用例"><a href="#用等价类设计测试用例" class="headerlink" title="用等价类设计测试用例"></a>用等价类设计测试用例</h4><ul>
+<li>分析输入输出，划分等价类，形成等价类表； </li>
+<li>设计一新的测试用例，使其尽可能多地覆盖尚未覆盖的有效等价类，重复这一步骤，直到所有的有效等价类都被覆盖为止； </li>
+<li>设计一新测试用例，使其只覆盖一个无效等价类，重复这一步骤直到所有无效等价类均被覆盖；</li>
+</ul>
+<h3 id="写测试用例"><a href="#写测试用例" class="headerlink" title="写测试用例"></a>写测试用例</h3><h2 id="Web测试"><a href="#Web测试" class="headerlink" title="Web测试"></a>Web测试</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><blockquote>
+<p>如：搜索功能如何测试（角度）</p>
+</blockquote>
+<h4 id="表单测试"><a href="#表单测试" class="headerlink" title="表单测试"></a>表单测试</h4><ul>
+<li>测试方法<ul>
+<li>边界值测试</li>
+<li>等价类测试</li>
+<li>异常类测试</li>
+</ul>
+</li>
+<li>文本框测试常见验证点<ul>
+<li>输入正常的字母或数字，验证是否能正常工作。</li>
+<li>输入已存在的用户名或电子邮件名称，验证是否有唯一性校验。</li>
+<li>输入超长字符串，例如在“名称”框中输入超过允许边界个数的字符，假设最多255字符，尝试输入256个或以上字符，检查程序能否正确处理。</li>
+<li>输入默认值，空白，空格，检查程序能否正确处理。</li>
+<li>若只允许输入字母，尝试输入数字；反之；尝试输入字母，检查程序能否正确处理。</li>
+<li>利用复制，粘贴等操作强制输入程序不允许的输入数据，检查程序能否正确处理。</li>
+<li>输入特殊字符集，例如，NULL及\n等，检查程序能否正确处理。</li>
+<li>输入中文、英文、数字、特殊字符（特别注意单引号和反斜杠）及这四类的混合输入，检查程序能否正确处理。</li>
+<li>输入不符合格式的数据，检查程序是否正常校验，如：程序要求输入身份证号，</li>
+<li>输入abc123，程序应该给出错误提示。</li>
+<li>输入html语言的&lt;head&gt;、&lt;html&gt;、&lt;b&gt;等，检查是否能原样正确显示。</li>
+<li>输入全角、半角的英文、数字、特殊字符等，检查是否报错。</li>
+</ul>
+</li>
+<li>特殊输入域常见验证点<ul>
+<li>密码框测试常见验证点<ul>
+<li>密码输入域输入数据是否可见？密码的正确显示必须为“******”，不可见模式。</li>
+<li>密码是否可以全部是空格？密码设计必须不能全为空格。</li>
+<li>密码是否对大小写敏感？比如：密码“An@d123R”与“an@d123r”，一定不是同一个密码。</li>
+</ul>
+</li>
+<li>日期填充域常见验证点 <ul>
+<li>输入不符合格式的数据，检查程序是否正常校验，如：程序要求输入年月日格式为yy/mm/dd，实际输入yyyy/mm/dd，程序应该给出错误提示。</li>
+<li>无效日期处理，如：出生年月输入为2013/02/30，我们知道2月最多是29天，检查程序是否出错。</li>
+<li>出生日期填写为未来日期，比如3214/12/12，检查程序是否出错。</li>
+<li>将结束日期设置在开始日期之前，检查是否有正常校验。</li>
+</ul>
+</li>
+<li>电话号码填充域常见验证点<ul>
+<li>电话号码应该由一组数字组成，不能包含英文字母。</li>
+<li>如果有分机号，中间用破折号分隔。</li>
+</ul>
+</li>
+<li>邮政编码填充域常见验证点<ul>
+<li>国内的邮政编码都是数字。</li>
+<li>英国的邮编是字母与数字的组合，当我们测试国外邮编时需要先查一下该国的邮编格式。</li>
+</ul>
+</li>
+<li>电子邮件填充域常见验证点<ul>
+<li>电子邮件的格式为：<a href="mailto:xyz@xyz.xyz">xyz@xyz.xyz</a>，输入错误的格式比如：aa@aa，123，aa#aa.aa，检查是否有错误提示。</li>
+<li>输入正确的电子邮件地址，需要能验证通过，并能收到相应的Email。</li>
+</ul>
+</li>
+<li>购物数量填充域常见验证点<ul>
+<li>在填写购物数量的地方，输入一个最大值，查看钱数累计的是否正确；</li>
+<li>在填写购物数量的地方，输入一个负数，检查是否有正确的处理；</li>
+<li>在填写购物数量的地方，输入一个数字0，检查是否有正确的处理；</li>
+<li>在填写购物数量的地方，输入一个字母a，检查是否有正确的处理；</li>
+<li>在填写购物数量的地方，输入一个特殊符号&gt;，检查页面能否正确显示。</li>
+</ul>
+</li>
+<li>必填字段常见验证点<ul>
+<li>必填字段不输入任何内容，直接提交，检查是否有错误提示；</li>
+<li>必填字段只输入空格，然后提交，检查是否有错误提示；</li>
+<li>必填字段的提示是否统一。</li>
+</ul>
+</li>
+<li>单选按钮常见验证点<ul>
+<li>一组单选按钮不能同时选中，只能选中一个；</li>
+<li>逐一执行每个单选按钮的功能。分别选择了“男”、“女”后，保存到数据库的数据应该相应的分别为“男”、“女”；</li>
+<li>一组执行同一功能的单选按钮在初始状态时必须有一个被默认选中，不能同时为空。</li>
+</ul>
+</li>
+<li>复选框常见验证点<ul>
+<li>多个复选框可以被同时选中（全选）；</li>
+<li>多个复选框可以被部分选中（部分选）；</li>
+<li>多个复选框可以都不被选中（全不选）；</li>
+<li>逐一执行每个复选框的功能（选择保存后，查看保存结果是与所选择的一致）。</li>
+</ul>
+</li>
+<li>大块文字区域常见验证点<ul>
+<li>输入数据超出最大字符数，检查会出什么情况；</li>
+<li>输入数据正好为最大字符数，检查是否能正确保存；</li>
+<li>不输入任何数据，检查是否能正确保存；</li>
+<li>在Firefox或Chrome浏览器下，大块文字区域右下角一般都可以拖放，尝试用鼠标进行拖放，检查会不会导致界面很难看或滚动条消失。</li>
+</ul>
+</li>
+<li>下拉列表框常见验证点<ul>
+<li>条目内容正确，无重复条目，无遗失条目；</li>
+<li>逐一执行列表框中每个条目的功能。</li>
+</ul>
+</li>
+<li>排序常见验证点<ul>
+<li>选择正序排列后，再检查一下反序排序；</li>
+<li>对文字的排序，检查是否按从A到Z的顺序；</li>
+<li>对价格、数目等的排序，检查是否按数字大小顺序；</li>
+<li>如果有分页，检查是否先好排序再分页。</li>
+</ul>
+</li>
+<li>分页测试常见验证点：<ul>
+<li>当没有数据时，首页、上一页、下一页、尾页标签全部置灰，不支持点击；</li>
+<li>在首页时，“首页”“上一页”标签置灰；在尾页时，“下一页”“尾页”标签置灰；在中间页时，四个标签均可点击，且跳转正确；</li>
+<li>翻页后，列表中的数据是否仍按照指定的顺序进行了排序；</li>
+<li>各个分页标签是否在同一水平线上；</li>
+<li>各个页面的分页标签样式是否一致；</li>
+<li>分页的总页数及当前页数显示是否正确；</li>
+<li>是否能正确跳转到指定的页数；</li>
+<li>在分页处输入非数字的字符（英文、特殊字符等），输入0或超出总页数的数字，是否有友好提示信息；</li>
+<li>是否支持回车键的监听。</li>
+</ul>
+</li>
+<li>搜索框填充域常见验证点<ul>
+<li>搜索按钮功能是否实现；</li>
+<li>输入网站中存在的信息，能否正确搜索出结果；</li>
+<li>输入键盘中所有特殊字符，是否报错；特别关注：_？＇＂# \ / – &lt; &gt;；特殊字符；</li>
+<li>搜索出的结果页面是否与其他页面风格一致；</li>
+<li>在输入域输入空格，点击搜索系统是否报错；</li>
+<li>本站内搜索输入域中不输入任何内容，是否搜索出的是全部信息或者给予提示信息；</li>
+<li>输入NULL/null、或很长的字符串，会出现什么结果；</li>
+<li>精确查询还是模糊查询，如果是模糊查询输入：中%国（中*国），查询结果是不是都包含中国两个字的信息；</li>
+<li>焦点放置搜索框中，搜索框默认内容是否自动被清空；</li>
+<li>搜索输入域是否实现回车键监听事件。</li>
+</ul>
+</li>
+<li>用户登录常见验证点<ul>
+<li>用户名和密码都符合要求并且是正确的，检查是否能登录成功；</li>
+<li>用户名和密码都不符合格式要求，检查是否能登录成功以及出错提示；</li>
+<li>用户名符合要求，密码不符合要求，检查是否能登录成功以及出错提示；</li>
+<li>密码符合要求，用户名不符合要求，检查是否能登录成功以及出错提示；</li>
+<li>用户名或密码为空，检查是否能登录成功以及出错提示；</li>
+<li>数据库中不存在的用户名，不存在的密码，检查是否能登录成功以及出错提示；</li>
+<li>数据库中存在的用户名，错误的密码，检查是否能登录成功以及出错提示；</li>
+<li>数据库中不存在的用户名，存在的密码，检查是否能登录成功以及出错提示；</li>
+<li>输入的用户名或密码前存在空格，检查是否能登录成功以及出错提示；<br>按键盘上的回车键是否监听事件，能执行登录过程。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="界面测试"><a href="#界面测试" class="headerlink" title="界面测试"></a>界面测试</h4><p>用户界面测试，英文是User interface testing，又称UI Testing，是指软件中的可见外观及其底层与用户交互的部分，包括菜单、对话框、窗口和其它控件。</p>
+<ul>
+<li>文字重叠问题</li>
+<li>字符显示不完整</li>
+<li>乱码</li>
+<li>Tooltip对应不同</li>
+<li>菜单对应不一致</li>
+<li>鼠标变小手</li>
+<li>不同浏览器显示问题</li>
+<li>不同版本浏览器显示问题</li>
+<li>不同OS &amp; Browser显示问题</li>
+<li>对齐问题</li>
+<li>图片显示问题</li>
+<li>各个页面的样式风格是否统一 </li>
+<li>各个页面的标题Title是否正确</li>
+<li>导航处是否按相应的栏目级别显示</li>
+<li>所有的图片是否都被正确装载，在不同的浏览器、分辨率下图片是否能正确显示（包括位置、大小）</li>
+<li>窗口缩小</li>
+<li>……</li>
+</ul>
+<h4 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h4><p>功能测试（Functional testing）。Web应用程序中的功能测试主要是对页面的链接、按钮等页面元素功能是否正常工作的测试。</p>
+<ul>
+<li>链接问题<ul>
+<li>链接不工作</li>
+<li>空链接</li>
+<li>链接页面错误</li>
+</ul>
+</li>
+<li>按钮问题<ul>
+<li>按钮不工作</li>
+<li>点击按钮产生JSerror</li>
+</ul>
+</li>
+<li>本身应该具有的功能<ul>
+<li>该有的功能没有实现</li>
+<li>该有的功能错误对应到另一功能</li>
+</ul>
+</li>
+<li>提示问题<ul>
+<li>缺少提示</li>
+<li>提示信息错误</li>
+<li>提示导致UI问题</li>
+</ul>
+</li>
+</ul>
+<h4 id="安全测试"><a href="#安全测试" class="headerlink" title="安全测试"></a>安全测试</h4><ul>
+<li><p>编辑框</p>
+<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>alert(“XSS”)<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+</li>
+<li><p>URL</p>
+<pre><code class="hljs html">URL+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>alert(“XSS”)<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+</li>
+<li><p>修改URL</p>
+<p>修改URL导致显示其他内容</p>
+</li>
+<li><p>SQL注入</p>
+</li>
+</ul>
+<h3 id="写缺陷报告"><a href="#写缺陷报告" class="headerlink" title="写缺陷报告"></a>写缺陷报告</h3><p><img src="/images/image-20210527100653918.png" alt="image-20210527100653918"></p>
+<h3 id="selenium写代码"><a href="#selenium写代码" class="headerlink" title="selenium写代码"></a>selenium写代码</h3><ul>
+<li><p>Elements can be accessed in many ways:</p>
+<ul>
+<li><p>Element attribute: </p>
+<ul>
+<li><p>name</p>
+<pre><code class="hljs java">driver.findElement(By.name(<span class="hljs-string">"password"</span>)).sendKeys(“aaaa<span class="hljs-string">");</span></code></pre>
+</li>
+<li><p>id</p>
+<pre><code class="hljs java">driver.findElement(By.id(<span class="hljs-string">"user"</span>)).sendKeys(<span class="hljs-string">"wangtianci"</span>);</code></pre>
+</li>
+<li><p>value</p>
+</li>
+</ul>
+</li>
+<li><p>Xpath </p>
+<pre><code class="hljs java">driver.findElement(By.xpath(<span class="hljs-string">"//[@id=\"kw\"]"</span>)).sendKeys(<span class="hljs-string">"selenium"</span>);</code></pre>
+</li>
+<li><p>LinkText</p>
+<pre><code class="hljs java">driver.findElement(By.linkText(<span class="hljs-string">"学术"</span>)).click();</code></pre></li>
+</ul>
+</li>
+<li><p>User actions that can be emulated:</p>
+<ul>
+<li>Click</li>
+<li>Filling out text fields (sending keys)</li>
+</ul>
+</li>
+</ul>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">import</span> org.openqa.selenium.By;
+<span class="hljs-keyword">import</span> org.openqa.selenium.WebDriver;
+<span class="hljs-keyword">import</span> org.openqa.selenium.chrome.ChromeDriver;
+<span class="hljs-keyword">import</span> org.openqa.selenium.support.ui.Select;
+<span class="hljs-keyword">import</span> org.openqa.selenium.WebElement;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">App</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">WebDriver</span> <span class="hljs-variable">driver</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ChromeDriver</span>();
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception {
+        System.out.println(<span class="hljs-string">"Hello, World!"</span>);
+        System.setProperty(<span class="hljs-string">"webdriver.chrome.driver"</span>,<span class="hljs-string">"/usr/bin/chromedriver"</span>);
+        <span class="hljs-comment">//亚马逊</span>
+        driver.get(<span class="hljs-string">"https://www.amazon.com/?currency=USD&amp;language=en_US"</span>);
+
+        <span class="hljs-comment">//选择搜索类别--书籍</span>
+        selectItem(<span class="hljs-string">"search-alias=stripbooks-intl-ship"</span>);
+        <span class="hljs-comment">//搜索“selenium design patterns"</span>
+        search(<span class="hljs-string">"selenium design patterns"</span>);
+        <span class="hljs-comment">//选择结果第一项</span>
+        chooseResult();
+        <span class="hljs-comment">//加入购物车并查看购物车</span>
+        addToCart();
+        
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sleep</span><span class="hljs-params">(<span class="hljs-type">int</span> time)</span> {
+        <span class="hljs-keyword">try</span> {
+            Thread.sleep(time);
+        } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+            <span class="hljs-comment">// TODO Auto-generated catch block</span>
+            e.printStackTrace();
+        }
+    }
+
+    <span class="hljs-comment">//选择搜索类别</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">selectItem</span><span class="hljs-params">(String value)</span>{
+        sleep(<span class="hljs-number">2000</span>);
+        <span class="hljs-type">WebElement</span> <span class="hljs-variable">formElement</span> <span class="hljs-operator">=</span> driver.findElement
+        (By.id(<span class="hljs-string">"searchDropdownBox"</span>));
+        sleep(<span class="hljs-number">1000</span>);
+
+        <span class="hljs-type">Select</span> <span class="hljs-variable">downList</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Select</span>(formElement);
+        downList.selectByValue(value);
+
+        List&lt;WebElement&gt; list = downList.getAllSelectedOptions();
+        <span class="hljs-keyword">for</span>(WebElement option : list) {
+            System.out.println(option.getText());
+        }
+        System.out.println(downList.getFirstSelectedOption().getText());
+
+    }
+
+    <span class="hljs-comment">//搜索</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">search</span><span class="hljs-params">(String keywords)</span> {
+        sleep(<span class="hljs-number">1000</span>);
+        <span class="hljs-type">WebElement</span> <span class="hljs-variable">searchBox</span> <span class="hljs-operator">=</span> driver.findElement(By.id(<span class="hljs-string">"twotabsearchtextbox"</span>));
+        searchBox.sendKeys(keywords);
+        <span class="hljs-type">WebElement</span> <span class="hljs-variable">searchButton</span> <span class="hljs-operator">=</span> driver.findElement(By.id(<span class="hljs-string">"nav-search-submit-button"</span>));
+        searchButton.click();
+        System.out.println(<span class="hljs-string">"Searching..."</span>);
+    }
+
+    <span class="hljs-comment">//选择搜索结果的第一项</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">chooseResult</span><span class="hljs-params">()</span> {
+        sleep(<span class="hljs-number">3000</span>);
+        <span class="hljs-type">WebElement</span> <span class="hljs-variable">chosen</span> <span class="hljs-operator">=</span> driver.findElement
+            (By.cssSelector(<span class="hljs-string">".a-link-normal:first-child"</span>));
+        chosen.click();
+    }
+
+    <span class="hljs-comment">//加入购物车</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addToCart</span><span class="hljs-params">()</span> {
+        sleep(<span class="hljs-number">1500</span>);
+        <span class="hljs-type">WebElement</span> <span class="hljs-variable">tag</span> <span class="hljs-operator">=</span> driver.findElement(By.id(<span class="hljs-string">"mediaTab_heading_1"</span>));
+        tag.click();
+        sleep(<span class="hljs-number">1500</span>);
+        <span class="hljs-type">WebElement</span> <span class="hljs-variable">toBuy</span> <span class="hljs-operator">=</span> driver.findElement(By.id(<span class="hljs-string">"a-autoid-2-announce"</span>));
+        toBuy.click();
+        sleep(<span class="hljs-number">2000</span>);
+        <span class="hljs-type">WebElement</span> <span class="hljs-variable">addToCart</span> <span class="hljs-operator">=</span> driver.findElement(By.name(<span class="hljs-string">"submit.addToCart"</span>));
+        addToCart.click();
+        sleep(<span class="hljs-number">2000</span>);
+        <span class="hljs-type">WebElement</span> <span class="hljs-variable">option_cart</span> <span class="hljs-operator">=</span> driver.findElement(By.id(<span class="hljs-string">"hlb-view-cart-announce"</span>));
+        option_cart.click();
+    }
+}</code></pre>
+
+
+
+<h2 id="白盒测试"><a href="#白盒测试" class="headerlink" title="白盒测试"></a>白盒测试</h2><h3 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>白盒测试又叫结构测试，逻辑驱动测试或基于程序本身的测试。 </p>
+<h4 id="动态测试"><a href="#动态测试" class="headerlink" title="动态测试"></a>动态测试</h4><h5 id="逻辑覆盖"><a href="#逻辑覆盖" class="headerlink" title="逻辑覆盖"></a>逻辑覆盖</h5><blockquote>
+<p>每一个标准的含义 </p>
+</blockquote>
+<ul>
+<li><p>语句覆盖 </p>
+<p>设计若干条测试用例，使程序中每条可执行语句至少执行一次。</p>
+</li>
+<li><p>判定覆盖（分支覆盖） </p>
+<p>设计测试用例，使程序中的每个逻辑判断的取真和取假的分支至少经历一次。</p>
+</li>
+<li><p>条件覆盖 </p>
+<p>设计若干测试用例，使程序的每个判定中的每个条件的可能取值至少满足一次</p>
+</li>
+<li><p>判定-条件覆盖 </p>
+<p>使判定中每个条件的可能取值至少满足一次，并且使每个判定分支至少执行一次。 </p>
+<p>判定-条件覆盖能同时满足判定、条件两种覆盖标准。</p>
+</li>
+<li><p>条件组合覆盖 </p>
+<p>设计用例，使得每个判断表达式中条件的各种可能组合都至少出现一次；</p>
+</li>
+<li><p>路径覆盖</p>
+<p>设计足够多的测试用例，覆盖程序中的每条可能路径。</p>
+</li>
+</ul>
+<pre><code class="hljs mermaid">graph TD
+A[语句覆盖] --&gt; B[判定覆盖]
+A[语句覆盖] --&gt; C[条件覆盖]
+B[判定覆盖] --&gt; D[判定/条件覆盖]
+C[条件覆盖] --&gt; D[判定/条件覆盖]
+D--&gt;E[条件组合覆盖]--&gt;F[路径覆盖]</code></pre>
+
+<h5 id="写覆盖"><a href="#写覆盖" class="headerlink" title="写覆盖"></a>写覆盖</h5><ul>
+<li><p>Draw the CFG for the code fragment.</p>
+</li>
+<li><p>Compute the cyclomatic complexity number C, for the CFG.</p>
+<ul>
+<li>Cyclomatic complexity <ul>
+<li>The number of ‘regions’ in the graph;  </li>
+<li>The number of predicates + 1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Find at most C paths that cover the nodes and arcs in a CFG, also known as Basic Paths Set;</p>
+</li>
+<li><p>Design test cases to force execution along paths in the Basic Paths Set.</p>
+</li>
+</ul>
+<h5 id="Junit写代码"><a href="#Junit写代码" class="headerlink" title="Junit写代码"></a>Junit写代码</h5><ul>
+<li><p>The annotations in Junit</p>
+<ul>
+<li><p>@Test public void method()<br> this means the method is used to test the other methods.</p>
+</li>
+<li><p>@Before public void method()<br> the method is always executed before every test method is executed. It is usually used to prepare some data, or give some initial values.</p>
+</li>
+<li><p>@After public void method()<br> the method is always executed after every test method is executed. It is usually used to free up some storage space.</p>
+</li>
+<li><p>@BeforeClass public static void method()</p>
+<p>the method is only executed once before all test methods are executed. It is usually used to do what all methods depend on, like connecting database.</p>
+</li>
+<li><p>@AfterClass public static void method()<br> contrary to @BeforeClass</p>
+</li>
+<li><p>@Ignore public void method()<br> the method will be ignored.</p>
+</li>
+<li><p>@Test(expected=IllegalArgumentException.class)<br>Check if the exception can be thrown</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Test(expected=ArithmeticException.class)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testDiv</span><span class="hljs-params">()</span> {
+    Math demoMath=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Math</span>();
+    <span class="hljs-type">int</span> expected;<span class="hljs-comment">// expected result</span>
+    <span class="hljs-type">int</span> actualvalue;<span class="hljs-comment">// actual result</span>
+    expected=<span class="hljs-number">2</span>;
+    actualvalue=demoMath.div(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+    assertEquals(expected, actualvalue);
+}</code></pre>
+</li>
+<li><p>@Test(timeout=100)<br>If the execution time of the method is greater than 100ms, the test fails.</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Test(timeout=1)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testDiv</span><span class="hljs-params">()</span> {
+    Math demoMath=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Math</span>();
+    <span class="hljs-type">int</span> expected;<span class="hljs-comment">//expected result</span>
+    <span class="hljs-type">int</span> actualvalue;<span class="hljs-comment">//actual result</span>
+    expected=<span class="hljs-number">2</span>;
+    actualvalue=demoMath.div(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>);
+    assertEquals(expected, actualvalue);
+}</code></pre></li>
+</ul>
+</li>
+<li><p>Assertion methods</p>
+<ul>
+<li>assertEquals</li>
+<li>assertArrayEquals</li>
+<li>assertFalse</li>
+<li>assertTrue</li>
+<li>assertNull</li>
+<li>assertNotNull</li>
+<li>assertSame</li>
+<li>assertNotSame</li>
+<li>…….</li>
+</ul>
+</li>
+</ul>
+<h2 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h2><h3 id="概念-3"><a href="#概念-3" class="headerlink" title="概念"></a>概念</h3><p>性能测试是通过自动化的测试工具模拟多种正常、峰值以及异常负载条件来对系统的各项性能指标进行测试。</p>
+<p><img src="/images/st2.png" alt="st2"></p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2022/06/15/AndroidAnatomyScroll/" title="Android Anatomy"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: Android Anatomy</span></a><a class="button is-default" href="/2021/03/10/CplusplusScroll/" title="C++ 11 &amp; C++14"><span class="has-text-weight-semibold">Next: C++ 11 &amp; C++14</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="BambooSlips/BambooSlips.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com//"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/BambooSlips"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> BambooSlips 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo</p><!-- p.is-flex.is-justify-content-center--><!--   a(title="Hexo theme author" href='//github.com/haojen') Theme by Haojen&nbsp;--><!-- div(style="margin-top: 2px")--><!--   a(title="github-button" class="github-button" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true")--></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>Android Camera</title><meta name="description" content="May it be an evening star shines down upon you."><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'G-G8T1Z4FBY6', 'www.googletagmanager.com');
+ga('send', 'pageview');</script><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/oracle.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="
+An Overview of Activation of Android CameraWhen a Android device boots up, the kernel will be loaded first. And then, CameraProvider will load CameraHAL, after which CameraService is able to communicate with CameraProvider to make use of CameraHAL.
+When a APP trys taking control of the camera, Camera2 API will try getting CameraService, which will activat.."><meta name="generator" content="Hexo 7.0.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="BambooSlips' blog" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">BambooSlips's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Android Camera</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#An-Overview-of-Activation-of-Android-Camera"><span class="toc-text">An Overview of Activation of Android Camera</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Activation-of-HwServiceManager"><span class="toc-text">Activation of HwServiceManager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Activation-of-CameraProvider"><span class="toc-text">Activation of CameraProvider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Activation-of-CameraHAL"><span class="toc-text">Activation of CameraHAL</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Android"><i class="tag post-item-tag">Android</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Android Camera</h1><time class="has-text-grey" datetime="2023-05-20T06:11:16.000Z">2023-05-20</time><article class="mt-2 post-content"><p><img src="/images/Cameroid.jpeg" alt="Cameroid.jpeg"></p>
+<h2 id="An-Overview-of-Activation-of-Android-Camera"><a href="#An-Overview-of-Activation-of-Android-Camera" class="headerlink" title="An Overview of Activation of Android Camera"></a>An Overview of Activation of Android Camera</h2><p>When a Android device boots up, the kernel will be loaded first. And then, CameraProvider will load CameraHAL, after which CameraService is able to communicate with CameraProvider to make use of CameraHAL.</p>
+<p>When a APP trys taking control of the camera, Camera2 API will try getting CameraService, which will activate CameraProvider with the HIDL service. Finally, CameraHAL will call the driver.</p>
+<p><img src="/images/CameroidSimple.jpeg" alt="CameroidSimple.jpeg"></p>
+<h2 id="Activation-of-HwServiceManager"><a href="#Activation-of-HwServiceManager" class="headerlink" title="Activation of HwServiceManager"></a>Activation of HwServiceManager</h2><p>HwServiceManager is the management center of HIDL service, which is in control of all HIDL service in the system and started by the init process. And the CameraProvider is registered to it.</p>
+<p>The script that start HwServiceManager up and used by the init process is hwservicemanager.rc.</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># system/hwservicemanager/hwservicemanager.rc</span>
+
+service hwservicemanager /system/bin/hwservicemanager
+    user system
+    disabled
+    group system readproc
+    critical
+    onrestart setprop hwservicemanager.ready <span class="hljs-literal">false</span>
+    onrestart class_restart main
+    onrestart class_restart hal
+    onrestart class_restart early_hal
+    writepid /dev/cpuset/system-background/tasks
+    class animation
+    shutdown critical</code></pre>
+
+<p>And the source code of HwServiceManger is system/hwservicemanager/service.cpp. Let’s take a look at the main function.</p>
+<pre><code class="hljs cpp"><span class="hljs-comment">/* system/hwservicemanager/service.cpp</span>
+<span class="hljs-comment"> * main()</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// If hwservicemanager crashes, the system may be unstable and hard to debug. This is both why</span>
+    <span class="hljs-comment">// we log this and why we care about this at all.</span>
+    <span class="hljs-built_in">setProcessHidlReturnRestriction</span>(HidlReturnRestriction::ERROR_IF_UNCHECKED);
+
+    sp&lt;ServiceManager&gt; manager = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ServiceManager</span>();
+    <span class="hljs-built_in">setRequestingSid</span>(manager, <span class="hljs-literal">true</span>);
+
+    <span class="hljs-keyword">if</span> (!manager-&gt;<span class="hljs-built_in">add</span>(serviceName, manager).<span class="hljs-built_in">withDefault</span>(<span class="hljs-literal">false</span>)) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"Failed to register hwservicemanager with itself."</span>);
+    }
+
+    sp&lt;TokenManager&gt; tokenManager = <span class="hljs-keyword">new</span> <span class="hljs-built_in">TokenManager</span>();
+    <span class="hljs-keyword">if</span> (!manager-&gt;<span class="hljs-built_in">add</span>(serviceName, tokenManager).<span class="hljs-built_in">withDefault</span>(<span class="hljs-literal">false</span>)) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"Failed to register ITokenManager with hwservicemanager."</span>);
+    }
+
+    <span class="hljs-comment">// Tell IPCThreadState we're the service manager</span>
+    sp&lt;IBinder&gt; binder = <span class="hljs-built_in">toBinder</span>&lt;IServiceManager&gt;(manager);
+    sp&lt;BHwBinder&gt; service = <span class="hljs-built_in">static_cast</span>&lt;BHwBinder*&gt;(binder.<span class="hljs-built_in">get</span>()); <span class="hljs-comment">// local binder object</span>
+    IPCThreadState::<span class="hljs-built_in">self</span>()-&gt;<span class="hljs-built_in">setTheContextObject</span>(service);
+    <span class="hljs-comment">// Then tell the kernel</span>
+    ProcessState::<span class="hljs-built_in">self</span>()-&gt;<span class="hljs-built_in">becomeContextManager</span>(<span class="hljs-literal">nullptr</span>, <span class="hljs-literal">nullptr</span>);
+
+    <span class="hljs-type">int</span> rc = <span class="hljs-built_in">property_set</span>(<span class="hljs-string">"hwservicemanager.ready"</span>, <span class="hljs-string">"true"</span>);
+    <span class="hljs-keyword">if</span> (rc) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"Failed to set \"hwservicemanager.ready\" (error %d). "</span>\
+              <span class="hljs-string">"HAL services will not start!\n"</span>, rc);
+    }
+
+    sp&lt;Looper&gt; looper = Looper::<span class="hljs-built_in">prepare</span>(<span class="hljs-number">0</span> <span class="hljs-comment">/* opts */</span>);
+
+    (<span class="hljs-type">void</span>)HwBinderCallback::<span class="hljs-built_in">setupTo</span>(looper);
+    (<span class="hljs-type">void</span>)ClientCallbackCallback::<span class="hljs-built_in">setupTo</span>(looper, manager);
+
+    <span class="hljs-built_in">ALOGI</span>(<span class="hljs-string">"hwservicemanager is ready now."</span>);
+
+    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {
+        looper-&gt;<span class="hljs-built_in">pollAll</span>(<span class="hljs-number">-1</span> <span class="hljs-comment">/* timeoutMillis */</span>);
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre>
+
+<p><img src="/images/CurousCameroid.jpeg" alt="CameroidSimple.jpeg"></p>
+<h2 id="Activation-of-CameraProvider"><a href="#Activation-of-CameraProvider" class="headerlink" title="Activation of CameraProvider"></a>Activation of CameraProvider</h2><p>After HwServiceManager boots up, the booting of CameraProvider follows. Just like HwServiceManger, CameraProvider has its own booting script.</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># hardware/interfaces/camera/provider/2.4/default/android.hardware.camera.provider@2.4-service.rc</span>
+
+service vendor.camera-provider-2-4 /vendor/bin/hw/android.hardware.camera.provider@2.4-service
+    interface android.hardware.camera.provider@2.4::ICameraProvider legacy/0
+    class hal
+    user cameraserver
+    group audio camera input drmrpc
+    ioprio rt 4
+    capabilities SYS_NICE
+    task_profiles CameraServiceCapacity HighPerformance</code></pre>
+
+<p>After compiling, there will be a script under /vendor/etc/init/, which is the folder of a Android device. And that script will start up CameraProvider.</p>
+<pre><code class="hljs bash">AndroidDevice:/vendor/etc/init <span class="hljs-comment"># ls | grep "camera"</span>
+android.hardware.camera.provider@2.4-service_64.rc
+
+AndroidDevice:/vendor/etc/init <span class="hljs-comment"># cat android.hardware.camera.provider@2.4-service_64.rc</span>
+<span class="hljs-comment">#! /bin/sh</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment">#Copyright (c) 2019-2021 Qualcomm Technologies, Inc.</span>
+<span class="hljs-comment">#All Rights Reserved.</span>
+<span class="hljs-comment">#Confidential and Proprietary - Qualcomm Technologies, Inc.</span>
+<span class="hljs-comment">#</span>
+
+on property:sys.boot_completed=1
+    <span class="hljs-comment"># Add a cpuset for the camera daemon</span>
+    <span class="hljs-comment"># We want all cores for camera</span>
+    <span class="hljs-built_in">mkdir</span> /dev/cpuset/camera-daemon
+    write /dev/cpuset/camera-daemon/cpus 0-7
+    write /dev/cpuset/camera-daemon/mems 0
+    <span class="hljs-built_in">chown</span> cameraserver cameraserver /dev/cpuset/camera-daemon
+    <span class="hljs-built_in">chown</span> cameraserver cameraserver /dev/cpuset/camera-daemon/tasks
+    <span class="hljs-built_in">chmod</span> 0660 /dev/cpuset/camera-daemon/tasks
+
+service vendor.camera-provider-2-4 /vendor/bin/hw/android.hardware.camera.provider@2.4-service_64
+    override
+    interface android.hardware.camera.provider@2.4::ICameraProvider legacy/0
+    interface vendor.qti.hardware.camera.postproc@1.0::IPostProcService camerapostprocservice
+    class hal
+    user cameraserver
+    group audio camera input drmrpc oem_2907
+    ioprio rt 4
+    capabilities SYS_NICE
+    writepid /dev/cpuset/camera-daemon/tasks /dev/stune/foreground/tasks</code></pre>
+
+<p>The source code about how CameraProvider starts follows.</p>
+<pre><code class="hljs cpp"><span class="hljs-comment">/* hardware/interfaces/camera/provider/2.4/default/service.cpp</span>
+<span class="hljs-comment"> * main()</span>
+<span class="hljs-comment"> */</span>
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>
+<span class="hljs-function"></span>{
+    <span class="hljs-built_in">ALOGI</span>(<span class="hljs-string">"CameraProvider@2.4 legacy service is starting."</span>);
+    <span class="hljs-comment">// The camera HAL may communicate to other vendor components via</span>
+    <span class="hljs-comment">// /dev/vndbinder</span>
+    android::ProcessState::<span class="hljs-built_in">initWithDriver</span>(<span class="hljs-string">"/dev/vndbinder"</span>);
+    <span class="hljs-type">status_t</span> status;
+    <span class="hljs-keyword">if</span> (kLazyService) {
+        status = <span class="hljs-built_in">defaultLazyPassthroughServiceImplementation</span>&lt;ICameraProvider&gt;(<span class="hljs-string">"legacy/0"</span>,
+                                                                              <span class="hljs-comment">/*maxThreads*/</span> <span class="hljs-number">6</span>);
+    } <span class="hljs-keyword">else</span> {
+        status = <span class="hljs-built_in">defaultPassthroughServiceImplementation</span>&lt;ICameraProvider&gt;(<span class="hljs-string">"legacy/0"</span>,
+                                                                          <span class="hljs-comment">/*maxThreads*/</span> <span class="hljs-number">6</span>);
+    }
+    <span class="hljs-keyword">return</span> status;
+}</code></pre>
+
+<p>As we can see above, the service will initialize the dirver and then start up CameraProvider.<br>The following sequence diagram found on the Internet will help understand how the service activate CameraProvider in a <code>Passthrough</code> way, which will register the HIDL service to HwServiceManager I mentioned earlier.<br><img src="/images/CameraProviderDequenceDiagram.png" alt="CameraProviderDequenceDiagram.png"></p>
+<p>Especially, I’d like to record the source code of <code>CameraProvider_2_4</code> for a long-time reference.</p>
+<pre><code class="hljs cpp"><span class="hljs-comment">/* CameraProvider_2_4.h */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> ANDROID_HARDWARE_CAMERA_PROVIDER_V2_4_CAMERAPROVIDER_H</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> ANDROID_HARDWARE_CAMERA_PROVIDER_V2_4_CAMERAPROVIDER_H</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;android/hardware/camera/provider/2.4/ICameraProvider.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;hidl/Status.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;hidl/MQDescriptor.h&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> android {
+<span class="hljs-keyword">namespace</span> hardware {
+<span class="hljs-keyword">namespace</span> camera {
+<span class="hljs-keyword">namespace</span> provider {
+<span class="hljs-keyword">namespace</span> V2_4 {
+<span class="hljs-keyword">namespace</span> implementation {
+
+<span class="hljs-keyword">using</span> ::android::hardware::camera::common::V1_0::Status;
+<span class="hljs-keyword">using</span> ::android::hardware::camera::provider::V2_4::ICameraProvider;
+<span class="hljs-keyword">using</span> ::android::hardware::camera::provider::V2_4::ICameraProviderCallback;
+<span class="hljs-keyword">using</span> ::android::hardware::Return;
+<span class="hljs-keyword">using</span> ::android::hardware::hidl_string;
+<span class="hljs-keyword">using</span> ::android::sp;
+
+<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> IMPL&gt;
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">CameraProvider</span> : <span class="hljs-keyword">public</span> ICameraProvider {
+    <span class="hljs-built_in">CameraProvider</span>() : <span class="hljs-built_in">impl</span>() {}
+    ~<span class="hljs-built_in">CameraProvider</span>() {}
+
+    <span class="hljs-comment">// Caller must use this method to check if CameraProvider ctor failed</span>
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isInitFailed</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> impl.<span class="hljs-built_in">isInitFailed</span>(); }
+
+    <span class="hljs-comment">// Methods from ::android::hardware::camera::provider::V2_4::ICameraProvider follow.</span>
+    <span class="hljs-function">Return&lt;Status&gt; <span class="hljs-title">setCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> sp&lt;ICameraProviderCallback&gt;&amp; callback)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> impl.<span class="hljs-built_in">setCallback</span>(callback);
+    }
+
+    <span class="hljs-function">Return&lt;<span class="hljs-type">void</span>&gt; <span class="hljs-title">getVendorTags</span><span class="hljs-params">(getVendorTags_cb _hidl_cb)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> impl.<span class="hljs-built_in">getVendorTags</span>(_hidl_cb);
+    }
+
+    <span class="hljs-function">Return&lt;<span class="hljs-type">void</span>&gt; <span class="hljs-title">getCameraIdList</span><span class="hljs-params">(getCameraIdList_cb _hidl_cb)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> impl.<span class="hljs-built_in">getCameraIdList</span>(_hidl_cb);
+    }
+
+    <span class="hljs-function">Return&lt;<span class="hljs-type">void</span>&gt; <span class="hljs-title">isSetTorchModeSupported</span><span class="hljs-params">(isSetTorchModeSupported_cb _hidl_cb)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> impl.<span class="hljs-built_in">isSetTorchModeSupported</span>(_hidl_cb);
+    }
+
+    <span class="hljs-function">Return&lt;<span class="hljs-type">void</span>&gt; <span class="hljs-title">getCameraDeviceInterface_V1_x</span><span class="hljs-params">(</span></span>
+<span class="hljs-params"><span class="hljs-function">            <span class="hljs-type">const</span> hidl_string&amp; cameraDeviceName,</span></span>
+<span class="hljs-params"><span class="hljs-function">            getCameraDeviceInterface_V1_x_cb _hidl_cb)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> impl.<span class="hljs-built_in">getCameraDeviceInterface_V1_x</span>(cameraDeviceName, _hidl_cb);
+    }
+
+    <span class="hljs-function">Return&lt;<span class="hljs-type">void</span>&gt; <span class="hljs-title">getCameraDeviceInterface_V3_x</span><span class="hljs-params">(</span></span>
+<span class="hljs-params"><span class="hljs-function">            <span class="hljs-type">const</span> hidl_string&amp; cameraDeviceName,</span></span>
+<span class="hljs-params"><span class="hljs-function">            getCameraDeviceInterface_V3_x_cb _hidl_cb)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> impl.<span class="hljs-built_in">getCameraDeviceInterface_V3_x</span>(cameraDeviceName, _hidl_cb);
+    }
+
+<span class="hljs-keyword">private</span>:
+    IMPL impl;
+};
+
+<span class="hljs-comment">////////////////////////////////////////////////////////////////////////////////</span>
+
+<span class="hljs-comment">/* CameraProvider_2_4.cpp */</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"CameraProvider_2_4.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"LegacyCameraProviderImpl_2_4.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"ExternalCameraProviderImpl_2_4.h"</span></span>
+
+<span class="hljs-type">const</span> <span class="hljs-type">char</span> *kLegacyProviderName = <span class="hljs-string">"legacy/0"</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">char</span> *kExternalProviderName = <span class="hljs-string">"external/0"</span>;
+
+<span class="hljs-keyword">namespace</span> android {
+<span class="hljs-keyword">namespace</span> hardware {
+<span class="hljs-keyword">namespace</span> camera {
+<span class="hljs-keyword">namespace</span> provider {
+<span class="hljs-keyword">namespace</span> V2_4 {
+<span class="hljs-keyword">namespace</span> implementation {
+
+<span class="hljs-keyword">using</span> android::hardware::camera::provider::V2_4::ICameraProvider;
+
+<span class="hljs-keyword">extern</span> <span class="hljs-string">"C"</span> <span class="hljs-function">ICameraProvider* <span class="hljs-title">HIDL_FETCH_ICameraProvider</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* name)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> IMPL&gt;</span>
+<span class="hljs-function">CameraProvider&lt;IMPL&gt;* <span class="hljs-title">getProviderImpl</span><span class="hljs-params">()</span> </span>{
+    CameraProvider&lt;IMPL&gt; *provider = <span class="hljs-keyword">new</span> <span class="hljs-built_in">CameraProvider</span>&lt;IMPL&gt;();
+    <span class="hljs-keyword">if</span> (provider == <span class="hljs-literal">nullptr</span>) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"%s: cannot allocate camera provider!"</span>, __FUNCTION__);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+    }
+    <span class="hljs-keyword">if</span> (provider-&gt;<span class="hljs-built_in">isInitFailed</span>()) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"%s: camera provider init failed!"</span>, __FUNCTION__);
+        <span class="hljs-keyword">delete</span> provider;
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+    }
+    <span class="hljs-keyword">return</span> provider;
+}
+
+<span class="hljs-function">ICameraProvider* <span class="hljs-title">HIDL_FETCH_ICameraProvider</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* name)</span> </span>{
+    <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> android::hardware::camera::provider::V2_4::implementation;
+    ICameraProvider* provider = <span class="hljs-literal">nullptr</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(name, kLegacyProviderName) == <span class="hljs-number">0</span>) {
+        provider = <span class="hljs-built_in">getProviderImpl</span>&lt;LegacyCameraProviderImpl_2_4&gt;();
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(name, kExternalProviderName) == <span class="hljs-number">0</span>) {
+        provider = <span class="hljs-built_in">getProviderImpl</span>&lt;ExternalCameraProviderImpl_2_4&gt;();
+        provider = <span class="hljs-built_in">getProviderImpl</span>&lt;ExternalCameraProviderImpl_2_4&gt;();
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"%s: unknown instance name: %s"</span>, __FUNCTION__, name);
+    }
+
+    <span class="hljs-keyword">return</span> provider;
+}
+
+}  <span class="hljs-comment">// namespace implementation</span>
+}  <span class="hljs-comment">// namespace V2_4</span>
+}  <span class="hljs-comment">// namespace provider</span></code></pre>
+
+<p>And the real implementaion that calls CameraHAL is in the following source files:</p>
+<pre><code class="hljs bash">i@host:~/Code/android$ find hardware/interfaces/camera/provider/2.4/default/ -name <span class="hljs-string">"*CameraProviderImpl*"</span>
+hardware/interfaces/camera/provider/2.4/default/ExternalCameraProviderImpl_2_4.cpp
+hardware/interfaces/camera/provider/2.4/default/ExternalCameraProviderImpl_2_4.h
+hardware/interfaces/camera/provider/2.4/default/LegacyCameraProviderImpl_2_4.cpp
+hardware/interfaces/camera/provider/2.4/default/LegacyCameraProviderImpl_2_4.h</code></pre>
+
+<p>Let’s take a look at the constructor and initializer.</p>
+<pre><code class="hljs cpp"><span class="hljs-comment">//hardware/interfaces/camera/provider/2.4/default/LegacyCameraProviderImpl_2_4.h</span>
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LegacyCameraProviderImpl_2_4</span> : <span class="hljs-keyword">public</span> <span class="hljs-type">camera_module_callbacks_t</span> 
+{ <span class="hljs-comment">/* ... */</span> }
+
+<span class="hljs-comment">////////////////////////////////////////////////////////////////////////////////</span>
+
+<span class="hljs-comment">//hardware/interfaces/camera/provider/2.4/default/LegacyCameraProviderImpl_2_4.cpp</span>
+LegacyCameraProviderImpl_2_4::<span class="hljs-built_in">LegacyCameraProviderImpl_2_4</span>() :
+        <span class="hljs-built_in">camera_module_callbacks_t</span>({sCameraDeviceStatusChange,
+                                   sTorchModeStatusChange}) {
+    mInitFailed = <span class="hljs-built_in">initialize</span>();
+}
+
+<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">LegacyCameraProviderImpl_2_4::initialize</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">camera_module_t</span> *rawModule;
+    <span class="hljs-type">int</span> err = <span class="hljs-built_in">hw_get_module</span>(CAMERA_HARDWARE_MODULE_ID,
+            (<span class="hljs-type">const</span> <span class="hljs-type">hw_module_t</span> **)&amp;rawModule);
+    <span class="hljs-keyword">if</span> (err &lt; <span class="hljs-number">0</span>) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"Could not load camera HAL module: %d (%s)"</span>, err, <span class="hljs-built_in">strerror</span>(-err));
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+
+    mModule = <span class="hljs-keyword">new</span> <span class="hljs-built_in">CameraModule</span>(rawModule);
+    err = mModule-&gt;<span class="hljs-built_in">init</span>();
+    <span class="hljs-keyword">if</span> (err != OK) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"Could not initialize camera HAL module: %d (%s)"</span>, err, <span class="hljs-built_in">strerror</span>(-err));
+        mModule.<span class="hljs-built_in">clear</span>();
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-built_in">ALOGI</span>(<span class="hljs-string">"Loaded \"%s\" camera module"</span>, mModule-&gt;<span class="hljs-built_in">getModuleName</span>());
+
+    <span class="hljs-comment">// Setup vendor tags here so HAL can setup vendor keys in camera characteristics</span>
+    VendorTagDescriptor::<span class="hljs-built_in">clearGlobalVendorTagDescriptor</span>();
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">setUpVendorTags</span>()) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"%s: Vendor tag setup failed, will not be available."</span>, __FUNCTION__);
+    }
+
+    <span class="hljs-comment">// Setup callback now because we are going to try openLegacy next</span>
+    err = mModule-&gt;<span class="hljs-built_in">setCallbacks</span>(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">if</span> (err != OK) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"Could not set camera module callback: %d (%s)"</span>, err, <span class="hljs-built_in">strerror</span>(-err));
+        mModule.<span class="hljs-built_in">clear</span>();
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+
+    mPreferredHal3MinorVersion =
+        <span class="hljs-built_in">property_get_int32</span>(<span class="hljs-string">"ro.vendor.camera.wrapper.hal3TrebleMinorVersion"</span>, <span class="hljs-number">3</span>);
+    <span class="hljs-built_in">ALOGV</span>(<span class="hljs-string">"Preferred HAL 3 minor version is %d"</span>, mPreferredHal3MinorVersion);
+    <span class="hljs-keyword">switch</span>(mPreferredHal3MinorVersion) {
+        <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:
+        <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:
+            <span class="hljs-comment">// OK</span>
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">default</span>:
+            <span class="hljs-built_in">ALOGW</span>(<span class="hljs-string">"Unknown minor camera device HAL version %d in property "</span>
+                    <span class="hljs-string">"'camera.wrapper.hal3TrebleMinorVersion', defaulting to 3"</span>,
+                    mPreferredHal3MinorVersion);
+            mPreferredHal3MinorVersion = <span class="hljs-number">3</span>;
+    }
+
+    mNumberOfLegacyCameras = mModule-&gt;<span class="hljs-built_in">getNumberOfCameras</span>();
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; mNumberOfLegacyCameras; i++) {
+        <span class="hljs-type">uint32_t</span> device_version;
+        <span class="hljs-keyword">auto</span> rc = mModule-&gt;<span class="hljs-built_in">getCameraDeviceVersion</span>(i, &amp;device_version);
+        <span class="hljs-keyword">if</span> (rc != NO_ERROR) {
+            <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"%s: Camera device version query failed!"</span>, __func__);
+            mModule.<span class="hljs-built_in">clear</span>();
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">checkCameraVersion</span>(i, device_version) != OK) {
+            <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"%s: Camera version check failed!"</span>, __func__);
+            mModule.<span class="hljs-built_in">clear</span>();
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+
+        <span class="hljs-type">char</span> cameraId[kMaxCameraIdLen];
+        <span class="hljs-built_in">snprintf</span>(cameraId, <span class="hljs-built_in">sizeof</span>(cameraId), <span class="hljs-string">"%d"</span>, i);
+        <span class="hljs-function">std::string <span class="hljs-title">cameraIdStr</span><span class="hljs-params">(cameraId)</span></span>;
+        mCameraStatusMap[cameraIdStr] = CAMERA_DEVICE_STATUS_PRESENT;
+
+        <span class="hljs-built_in">addDeviceNames</span>(i);
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">// mInitFailed</span>
+}</code></pre>
+
+<p>And here follows related structures.</p>
+<pre><code class="hljs cpp"><span class="hljs-comment">//hardware/libhardware/include/hardware/camera_common.h</span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">camera_module</span> {
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * Common methods of the camera module.  This *must* be the first member of</span>
+<span class="hljs-comment">     * camera_module as users of this structure will cast a hw_module_t to</span>
+<span class="hljs-comment">     * camera_module pointer in contexts where it's known the hw_module_t</span>
+<span class="hljs-comment">     * references a camera_module.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-type">hw_module_t</span> common;
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * get_number_of_cameras:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Returns the number of camera devices accessible through the camera</span>
+<span class="hljs-comment">     * module.  The camera devices are numbered 0 through N-1, where N is the</span>
+<span class="hljs-comment">     * value returned by this call. The name of the camera device for open() is</span>
+<span class="hljs-comment">     * simply the number converted to a string. That is, "0" for camera ID 0,</span>
+<span class="hljs-comment">     * "1" for camera ID 1.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*get_number_of_cameras)(<span class="hljs-type">void</span>);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * get_camera_info:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Return the static camera information for a given camera device. This</span>
+<span class="hljs-comment">     * information may not change for a camera device.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*get_camera_info)(<span class="hljs-type">int</span> camera_id, <span class="hljs-keyword">struct</span> camera_info *info);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * set_callbacks:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Provide callback function pointers to the HAL module to inform framework</span>
+<span class="hljs-comment">     * of asynchronous camera module events. The framework will call this</span>
+<span class="hljs-comment">     * function once after initial camera HAL module load, after the</span>
+<span class="hljs-comment">     * get_number_of_cameras() method is called for the first time, and before</span>
+<span class="hljs-comment">     * any other calls to the module.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*set_callbacks)(<span class="hljs-type">const</span> <span class="hljs-type">camera_module_callbacks_t</span> *callbacks);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * get_vendor_tag_ops:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Get methods to query for vendor extension metadata tag information. The</span>
+<span class="hljs-comment">     * HAL should fill in all the vendor tag operation methods, or leave ops</span>
+<span class="hljs-comment">     * unchanged if no vendor tags are defined.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">void</span> (*get_vendor_tag_ops)(<span class="hljs-type">vendor_tag_ops_t</span>* ops);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * open_legacy:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Open a specific legacy camera HAL device if multiple device HAL API</span>
+<span class="hljs-comment">     * versions are supported by this camera HAL module. For example, if the</span>
+<span class="hljs-comment">     * camera module supports both CAMERA_DEVICE_API_VERSION_1_0 and</span>
+<span class="hljs-comment">     * CAMERA_DEVICE_API_VERSION_3_2 device API for the same camera id,</span>
+<span class="hljs-comment">     * framework can call this function to open the camera device as</span>
+<span class="hljs-comment">     * CAMERA_DEVICE_API_VERSION_1_0 device.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*open_legacy)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> <span class="hljs-type">hw_module_t</span>* <span class="hljs-keyword">module</span>, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* id,
+            <span class="hljs-type">uint32_t</span> halVersion, <span class="hljs-keyword">struct</span> <span class="hljs-type">hw_device_t</span>** device);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * set_torch_mode:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Turn on or off the torch mode of the flash unit associated with a given</span>
+<span class="hljs-comment">     * camera ID. If the operation is successful, HAL must notify the framework</span>
+<span class="hljs-comment">     * torch state by invoking</span>
+<span class="hljs-comment">     * camera_module_callbacks.torch_mode_status_change() with the new state.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*set_torch_mode)(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* camera_id, <span class="hljs-type">bool</span> enabled);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * init:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * This method is called by the camera service before any other methods</span>
+<span class="hljs-comment">     * are invoked, right after the camera HAL library has been successfully</span>
+<span class="hljs-comment">     * loaded. It may be left as NULL by the HAL module, if no initialization</span>
+<span class="hljs-comment">     * in needed.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * It can be used by HAL implementations to perform initialization and</span>
+<span class="hljs-comment">     * other one-time operations.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*init)();
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * get_physical_camera_info:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Return the static metadata for a physical camera as a part of a logical</span>
+<span class="hljs-comment">     * camera device. This function is only called for those physical camera</span>
+<span class="hljs-comment">     * ID(s) that are not exposed independently. In other words, camera_id will</span>
+<span class="hljs-comment">     * be greater or equal to the return value of get_number_of_cameras().</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*get_physical_camera_info)(<span class="hljs-type">int</span> physical_camera_id,
+            <span class="hljs-type">camera_metadata_t</span> **static_metadata);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * is_stream_combination_supported:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Check for device support of specific camera stream combination.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*is_stream_combination_supported)(<span class="hljs-type">int</span> camera_id,
+            <span class="hljs-type">const</span> <span class="hljs-type">camera_stream_combination_t</span> *streams);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * notify_device_state_change:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Notify the camera module that the state of the overall device has</span>
+<span class="hljs-comment">     * changed in some way that the HAL may want to know about.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">void</span> (*notify_device_state_change)(<span class="hljs-type">uint64_t</span> deviceState);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * get_camera_device_version:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Return the device version for a given camera device. This value may not change for a camera</span>
+<span class="hljs-comment">     * device. The version returned here must be the same as the one from get_camera_info.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">int</span> (*get_camera_device_version)(<span class="hljs-type">int</span> camera_id, <span class="hljs-type">uint32_t</span> *version);
+
+    <span class="hljs-comment">/* reserved for future use */</span>
+    <span class="hljs-type">void</span>* reserved[<span class="hljs-number">1</span>];
+} <span class="hljs-type">camera_module_t</span>;
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">camera_module_callbacks</span> {
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * camera_device_status_change:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Callback to the framework to indicate that the state of a specific camera</span>
+<span class="hljs-comment">     * device has changed. At module load time, the framework will assume all</span>
+<span class="hljs-comment">     * camera devices are in the CAMERA_DEVICE_STATUS_PRESENT state. The HAL</span>
+<span class="hljs-comment">     * must call this method to inform the framework of any initially</span>
+<span class="hljs-comment">     * NOT_PRESENT devices.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * This callback is added for CAMERA_MODULE_API_VERSION_2_1.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * camera_module_callbacks: The instance of camera_module_callbacks_t passed</span>
+<span class="hljs-comment">     *   to the module with set_callbacks.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * camera_id: The ID of the camera device that has a new status.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * new_status: The new status code, one of the camera_device_status_t enums,</span>
+<span class="hljs-comment">     *   or a platform-specific status.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">void</span> (*camera_device_status_change)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> camera_module_callbacks*,
+            <span class="hljs-type">int</span> camera_id,
+            <span class="hljs-type">int</span> new_status);
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * torch_mode_status_change:</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * Callback to the framework to indicate that the state of the torch mode</span>
+<span class="hljs-comment">     * of the flash unit associated with a specific camera device has changed.</span>
+<span class="hljs-comment">     * At module load time, the framework will assume the torch modes are in</span>
+<span class="hljs-comment">     * the TORCH_MODE_STATUS_AVAILABLE_OFF state if android.flash.info.available</span>
+<span class="hljs-comment">     * is reported as true via get_camera_info() call.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * This callback is added for CAMERA_MODULE_API_VERSION_2_4.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * camera_module_callbacks: The instance of camera_module_callbacks_t</span>
+<span class="hljs-comment">     *   passed to the module with set_callbacks.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * camera_id: The ID of camera device whose flash unit has a new torch mode</span>
+<span class="hljs-comment">     *   status.</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * new_status: The new status code, one of the torch_mode_status_t enums.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-built_in">void</span> (*torch_mode_status_change)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> camera_module_callbacks*,
+            <span class="hljs-type">const</span> <span class="hljs-type">char</span>* camera_id,
+            <span class="hljs-type">int</span> new_status);
+
+} <span class="hljs-type">camera_module_callbacks_t</span>;</code></pre>
+
+<p>As a conclusion, CameraHAL is accessible to CameraProvider, whcih is registered to HwServiceManager after activation. Therefore, when other service needs the CameraHAL, it just needs to communicate with CameraProvider. </p>
+<p><img src="/images/CameraHAL.jpeg" alt="CameroidSimple.jpeg"></p>
+<h2 id="Activation-of-CameraHAL"><a href="#Activation-of-CameraHAL" class="headerlink" title="Activation of CameraHAL"></a>Activation of CameraHAL</h2><p>As we can see in <code>LegacyCameraProviderImpl_2_4::initialize()</code>, CameraHAL is initialized with class <code>CameraModule</code>, which is a wrapper class for HAL camera module.</p>
+<pre><code class="hljs cpp"><span class="hljs-comment">// hardware/interfaces/camera/common/1.0/default/include/CameraModule.h</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">CameraModule</span> : <span class="hljs-keyword">public</span> RefBase {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">CameraModule</span><span class="hljs-params">(<span class="hljs-type">camera_module_t</span> *<span class="hljs-keyword">module</span>)</span></span>;
+    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">CameraModule</span>();
+
+    <span class="hljs-comment">// Must be called after construction</span>
+    <span class="hljs-comment">// Returns OK on success, NO_INIT on failure</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getCameraDeviceVersion</span><span class="hljs-params">(<span class="hljs-type">int</span> cameraId, <span class="hljs-type">uint32_t</span>* version)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getCameraInfo</span><span class="hljs-params">(<span class="hljs-type">int</span> cameraId, <span class="hljs-keyword">struct</span> camera_info *info)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getDeviceVersion</span><span class="hljs-params">(<span class="hljs-type">int</span> cameraId)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getNumberOfCameras</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">open</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* id, <span class="hljs-keyword">struct</span> <span class="hljs-type">hw_device_t</span>** device)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isOpenLegacyDefined</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">openLegacy</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* id, <span class="hljs-type">uint32_t</span> halVersion, <span class="hljs-keyword">struct</span> <span class="hljs-type">hw_device_t</span>** device)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">setCallbacks</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">camera_module_callbacks_t</span> *callbacks)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isVendorTagDefined</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">getVendorTagOps</span><span class="hljs-params">(<span class="hljs-type">vendor_tag_ops_t</span>* ops)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isSetTorchModeSupported</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">setTorchMode</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* camera_id, <span class="hljs-type">bool</span> enable)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">uint16_t</span> <span class="hljs-title">getModuleApiVersion</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;
+    <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title">getModuleName</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;
+    <span class="hljs-function"><span class="hljs-type">uint16_t</span> <span class="hljs-title">getHalApiVersion</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;
+    <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title">getModuleAuthor</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;
+    <span class="hljs-comment">// Only used by CameraModuleFixture native test. Do NOT use elsewhere.</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> *<span class="hljs-title">getDso</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-comment">// Only used by CameraProvider</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">removeCamera</span><span class="hljs-params">(<span class="hljs-type">int</span> cameraId)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getPhysicalCameraInfo</span><span class="hljs-params">(<span class="hljs-type">int</span> physicalCameraId, <span class="hljs-type">camera_metadata_t</span> **physicalInfo)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">isStreamCombinationSupported</span><span class="hljs-params">(<span class="hljs-type">int</span> cameraId, <span class="hljs-type">camera_stream_combination_t</span> *streams)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">notifyDeviceStateChange</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span> deviceState)</span></span>;
+
+    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">isLogicalMultiCamera</span><span class="hljs-params">(</span></span>
+<span class="hljs-params"><span class="hljs-function">            <span class="hljs-type">const</span> common::V1_0::helper::CameraMetadata&amp; metadata,</span></span>
+<span class="hljs-params"><span class="hljs-function">            std::unordered_set&lt;std::string&gt;* physicalCameraIds)</span></span>;
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// Derive camera characteristics keys defined after HAL device version</span>
+    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">deriveCameraCharacteristicsKeys</span><span class="hljs-params">(<span class="hljs-type">uint32_t</span> deviceVersion, CameraMetadata &amp;chars)</span></span>;
+    <span class="hljs-comment">// Helper function to append available[request|result|chars]Keys</span>
+    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">appendAvailableKeys</span><span class="hljs-params">(CameraMetadata &amp;chars,</span></span>
+<span class="hljs-params"><span class="hljs-function">            <span class="hljs-type">int32_t</span> keyTag, <span class="hljs-type">const</span> Vector&lt;<span class="hljs-type">int32_t</span>&gt;&amp; appendKeys)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">status_t</span> <span class="hljs-title">filterOpenErrorCode</span><span class="hljs-params">(<span class="hljs-type">status_t</span> err)</span></span>;
+    <span class="hljs-type">camera_module_t</span> *mModule;
+    <span class="hljs-type">int</span> mNumberOfCameras;
+    KeyedVector&lt;<span class="hljs-type">int</span>, camera_info&gt; mCameraInfoMap;
+    KeyedVector&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mDeviceVersionMap;
+    KeyedVector&lt;<span class="hljs-type">int</span>, <span class="hljs-type">camera_metadata_t</span>*&gt; mPhysicalCameraInfoMap;
+    Mutex mCameraInfoLock;
+};
+
+} <span class="hljs-comment">// namespace helper</span>
+} <span class="hljs-comment">// namespace V1_0</span>
+} <span class="hljs-comment">// namespace common</span>
+} <span class="hljs-comment">// namespace camera</span>
+} <span class="hljs-comment">// namespace hardware</span>
+} <span class="hljs-comment">// namespace android</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">endif</span></span>
+
+<span class="hljs-comment">////////////////////////////////////////////////////////////////////////////////</span>
+
+<span class="hljs-comment">// hardware/interfaces/camera/common/1.0/default/CameraModule.cpp</span>
+
+CameraModule::<span class="hljs-built_in">CameraModule</span>(<span class="hljs-type">camera_module_t</span> *<span class="hljs-keyword">module</span>) : <span class="hljs-built_in">mNumberOfCameras</span>(<span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">module</span> == <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-built_in">ALOGE</span>(<span class="hljs-string">"%s: camera hardware module must not be null"</span>, __FUNCTION__);
+        <span class="hljs-built_in">assert</span>(<span class="hljs-number">0</span>);
+    }
+    mModule = <span class="hljs-keyword">module</span>;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">CameraModule::init</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">ATRACE_CALL</span>();
+    <span class="hljs-type">int</span> res = OK;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">getModuleApiVersion</span>() &gt;= CAMERA_MODULE_API_VERSION_2_4 &amp;&amp;
+            mModule-&gt;init != <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-built_in">ATRACE_BEGIN</span>(<span class="hljs-string">"camera_module-&gt;init"</span>);
+        res = mModule-&gt;<span class="hljs-built_in">init</span>();
+        <span class="hljs-built_in">ATRACE_END</span>();
+    }
+    mNumberOfCameras = <span class="hljs-built_in">getNumberOfCameras</span>();
+    mCameraInfoMap.<span class="hljs-built_in">setCapacity</span>(mNumberOfCameras);
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">CameraModule::setCallbacks</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">camera_module_callbacks_t</span> *callbacks)</span> </span>{
+    <span class="hljs-type">int</span> res = OK;
+    <span class="hljs-built_in">ATRACE_BEGIN</span>(<span class="hljs-string">"camera_module-&gt;set_callbacks"</span>);
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">getModuleApiVersion</span>() &gt;= CAMERA_MODULE_API_VERSION_2_1) {
+        res = mModule-&gt;<span class="hljs-built_in">set_callbacks</span>(callbacks);
+    }
+    <span class="hljs-built_in">ATRACE_END</span>();
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">CameraModule::getNumberOfCameras</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">int</span> numCameras;
+    <span class="hljs-built_in">ATRACE_BEGIN</span>(<span class="hljs-string">"camera_module-&gt;get_number_of_cameras"</span>);
+    numCameras = mModule-&gt;<span class="hljs-built_in">get_number_of_cameras</span>();
+    <span class="hljs-built_in">ATRACE_END</span>();
+    <span class="hljs-keyword">return</span> numCameras;
+}</code></pre>
+
+<p>By the way, the RefBase appeared above is a class provides a lightweight reference counting mechanism to manage the lifecycle of objects, which further avoids problems such as memory leaks and dangling pointers.</p>
+<p>To understand the <code>CameraModule.cpp</code>, the following source code may help.</p>
+<pre><code class="hljs bash">i@host:~/Code/android$ find hardware/ -name <span class="hljs-string">"camera.h"</span> -o -name <span class="hljs-string">"hardware.h"</span>
+hardware/libhardware/modules/camera/3_4/camera.h
+hardware/libhardware/include/hardware/hardware.h
+hardware/libhardware/include/hardware/camera.h</code></pre>
+
+<pre><code class="hljs cpp"><span class="hljs-comment">// hardware/libhardware/include/hardware/hardware.h</span>
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Get the module info associated with a module by id.</span>
+<span class="hljs-comment"> *</span>
+<span class="hljs-comment"> * @return: 0 == success, &lt;0 == error and *module == NULL</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">hw_get_module</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *id, <span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> <span class="hljs-type">hw_module_t</span> **<span class="hljs-keyword">module</span>)</span></span>;</code></pre>
+
+<p>Here follows a sequence diagram I drew to show this process more visually and clearly.</p>
+<p><img src="/images/CameraProvider&amp;CamerHAL.png" alt="CameraProvider&amp;CamerHAL.png"></p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2022/08/23/HIDLScroll/" title="HIDL"><span class="has-text-weight-semibold">Next: HIDL</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="BambooSlips/BambooSlips.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com//"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/BambooSlips"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> BambooSlips 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo</p><!-- p.is-flex.is-justify-content-center--><!--   a(title="Hexo theme author" href='//github.com/haojen') Theme by Haojen&nbsp;--><!-- div(style="margin-top: 2px")--><!--   a(title="github-button" class="github-button" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true")--></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
